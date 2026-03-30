@@ -1,0 +1,72 @@
+name: DevSecOps Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # Setup Python
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+
+    # ⚡ Cache pip
+    - name: Cache pip
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+
+    # Install deps + tools
+    - name: Install deps & tools
+      run: |
+        pip install -r app/requirements.txt
+        pip install bandit safety
+
+    # Install Trivy
+    - name: Install Trivy
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget
+        wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.50.0_Linux-64bit.deb
+        sudo dpkg -i trivy_0.50.0_Linux-64bit.deb
+
+    # Secrets scan
+    - name: Scan secrets
+      uses: trufflesecurity/trufflehog@main
+
+    # SAST
+    - name: Run SAST
+      run: bandit -c security/bandit.yaml -r app/ -ll
+
+    # Dependency scan
+    - name: Dependency scan
+      run: safety check --full-report --policy-file security/safety-policy.json
+
+    # Build Docker
+    - name: Build Docker
+      run: docker build -t devsecops-app .
+
+    # Scan Docker image
+    - name: Scan Docker image
+      run: trivy image --severity HIGH,CRITICAL --exit-code 1 devsecops-app
+
+    # Upload reports (clean)
+    - name: Upload reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-reports
+        path: |
+          bandit-report.json
+          safety-report.json
+
+    - name: Build success
+      run: echo "Pipeline OK"
