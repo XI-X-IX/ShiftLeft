@@ -1,15 +1,15 @@
 # DevOps Pipeline - Secure Cloud Application
 
+![Salut](https://img.shields.io/badge/DevSecOps-pink)
+![Python](https://img.shields.io/badge/python-3.11-blue)
+![Trivy Scan](https://img.shields.io/badge/Trivy-Secure-brightgreen)
+![Bandit Scan](https://img.shields.io/badge/Bandit-Clean-brightgreen)
+
+
 ## Overview
 
 This project demonstrates a complete Dev(Sec)Ops pipeline from development to deployment.  
 It includes security best practices integrated into the CI/CD process, infrastructure as code, and containerized deployment.
-
-![Build Status](https://github.com/XI-X-IX/DevOps/actions/workflows/pipeline.yml/badge.svg)
-![Python](https://img.shields.io/badge/python-3.11-blue)
-![Trivy Scan](https://img.shields.io/badge/Trivy-Secure-brightgreen)
-![Bandit Scan](https://img.shields.io/badge/Bandit-Clean-brightgreen)
-![License](https://img.shields.io/github/license/XI-X-IX/DevOps)
 
 **Key Features:**
 - Dockerized Python Flask application
