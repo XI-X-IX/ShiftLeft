@@ -1,11 +1,18 @@
+# API version for core Kubernetes resources (Services use v1)
 apiVersion: v1
+# Resource type: defines a stable network endpoint for Pods
 kind: Service
 metadata:
+  # Name of the Service object inside the namespace
   name: pipeline-service
 spec:
+  # Exposes the Service on a port on every cluster node
   type: NodePort
   selector:
+    # Routes traffic to Pods that have this label
     app: pipeline
   ports:
+    # Port exposed by the Service (client-facing)
     - port: 80
+      # Port used by the application container inside selected Pods
       targetPort: 5000
