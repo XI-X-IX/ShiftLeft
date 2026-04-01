@@ -1,19 +1,29 @@
+# Version de l'API Kubernetes pour les Deployments
 apiVersion: apps/v1
+# Type de ressource Kubernetes
 kind: Deployment
 metadata:
+  # Nom du Deployment
   name: pipeline-app
 spec:
+  # Nombre de pods souhaités en permanence
   replicas: 2
+  # Le selector doit correspondre aux labels du template
   selector:
     matchLabels:
       app: pipeline
+  # Modèle de pod utilisé pour créer les réplicas
   template:
     metadata:
       labels:
+        # Label appliqué aux pods créés
         app: pipeline
     spec:
       containers:
+      # Définition du conteneur principal de l'application
       - name: app
+        # Image du conteneur à déployer
         image: pipeline-app
         ports:
+        # Port exposé par le conteneur
         - containerPort: 5000
