@@ -1,0 +1,7 @@
+# Ignore unfixable HIGH vulnerabilities in base image
+CVE-2026-4046
+CVE-2025-69720
+CVE-2026-29111
+CVE-2025-14104
+CVE-2026-3184
+CVE-2026-2673
