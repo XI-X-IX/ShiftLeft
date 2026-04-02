@@ -52,7 +52,7 @@ jobs:
 
     # Build Docker
     - name: Build Docker
-      run: docker build -t pipeline-app .
+      run: docker build -t pipeline-app -f app/Dockerfile app
 
     # Scan Docker image
     - name: Scan Docker image
