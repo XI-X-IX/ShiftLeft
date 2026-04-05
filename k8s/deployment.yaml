@@ -1,4 +1,4 @@
-# Kubernetes API version for Deployments
+# Kubernetes API version for Deployment
 apiVersion: apps/v1
 # Kubernetes resource type
 kind: Deployment
