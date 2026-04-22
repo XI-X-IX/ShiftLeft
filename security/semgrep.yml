@@ -1,0 +1,45 @@
+rules:
+  - id: js-eval
+    message: Avoid eval() because it can execute arbitrary code.
+    severity: ERROR
+    languages:
+      - javascript
+      - typescript
+    pattern: eval(...)
+
+  - id: js-dynamic-function-constructor
+    message: Avoid the Function constructor because it evaluates dynamic code.
+    severity: ERROR
+    languages:
+      - javascript
+      - typescript
+    pattern: new Function(...)
+
+  - id: js-child-process-exec
+    message: Prefer execFile or spawn over exec when running commands.
+    severity: WARNING
+    languages:
+      - javascript
+      - typescript
+    pattern-either:
+      - pattern: child_process.exec(...)
+      - pattern: require("child_process").exec(...)
+      - pattern: $CP.exec(...)
+
+  - id: nextjs-dangerous-html
+    message: dangerouslySetInnerHTML should only be used with trusted content.
+    severity: WARNING
+    languages:
+      - javascript
+      - typescript
+    pattern: "dangerouslySetInnerHTML={{ __html: $HTML }}"
+
+  - id: js-hardcoded-secret
+    message: Hardcoded secrets should not be committed to source control.
+    severity: ERROR
+    languages:
+      - javascript
+      - typescript
+    patterns:
+      - pattern-regex: |
+          (?i)(api[_-]?key|secret|token|password)\s*[:=]\s*["'][^"']{8,}["']
