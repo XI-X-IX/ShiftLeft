@@ -2,9 +2,9 @@
 
 ![SecureCI](./secureci-banner.png)
 
-# ⚙️ SecureCI Pipeline — Secure Cloud Application
+# Pipeline SecureCI — Application Cloud Sécurisée
 
-### *End-to-end DevSecOps pipeline: from code to container, with security baked in at every stage.*
+### *Pipeline DevSecOps de bout en bout : du code au conteneur, avec la sécurité intégrée à chaque étape.*
 
 ![DevSecOps](https://img.shields.io/badge/DevSecOps-E83E8C?style=flat)
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat&logo=python&logoColor=white)
@@ -25,93 +25,92 @@
 
 ---
 
-## 🎯 Overview
+## Aperçu
 
-A complete **Dev(Sec)Ops pipeline** demonstrating how to ship a containerized Python application safely — from source code to Kubernetes deployment — with **security gates at every step**.
+Un **pipeline Dev(Sec)Ops complet** démontrant comment déployer une application Python containerisée en toute sécurité — du code source jusqu'au déploiement Kubernetes — avec des **portes de sécurité à chaque étape**.
 
-The pipeline fails the build if *any* HIGH/CRITICAL vulnerability is introduced: in the code (SAST), in dependencies (SCA), in committed secrets, or in the final Docker image.
+Le pipeline échoue la construction si une vulnérabilité HIGH/CRITICAL est introduite : dans le code (SAST), dans les dépendances (SCA), dans les secrets commités, ou dans l'image Docker finale.
 
 ---
 
-## 🎬 Demo
+## Démonstration
 
-
-**Example pipeline stages** (GitHub Actions):
+**Étapes du pipeline exemple** (GitHub Actions):
 
 ```
-✅ Checkout                         1s
-✅ Setup Python 3.11                3s
-✅ Install security tools           12s
-✅ TruffleHog — secrets scan        8s
-✅ Bandit — SAST on app/            4s
-✅ Safety — dependency scan         6s
-✅ Docker build                     45s
-✅ Trivy — image scan               22s
-✅ Upload security artifacts        2s
+OK Checkout                         1s
+OK Setup Python 3.11                3s
+OK Install security tools           12s
+OK TruffleHog — secrets scan        8s
+OK Bandit — SAST on app/            4s
+OK Safety — dependency scan         6s
+OK Docker build                     45s
+OK Trivy — image scan               22s
+OK Upload security artifacts        2s
 
-Status: success — 0 HIGH, 0 CRITICAL
+Statut: succès — 0 HIGH, 0 CRITICAL
 ```
 
 ---
 
-## ✨ Features
+## Fonctionnalités
 
-- 🐳 **Dockerized Flask app** — minimal base image, non-root user
-- 🔁 **GitHub Actions CI/CD** — fully automated from `git push` to deployment-ready artifact
-- 🔒 **SAST** — Bandit scans Python code for common vulnerabilities (SQLi, hardcoded creds, weak crypto)
-- 📦 **SCA** — Safety checks dependencies against the CVE database
-- 🔐 **Secrets scanning** — TruffleHog scans commits and Git history
-- 🖼️ **Container scanning** — Trivy flags CVEs in the image layers
-- 🏗️ **Infrastructure as Code** — Terraform provisions cloud resources
-- ☸️ **Kubernetes manifests** — deployment + service with security best practices
-- 📊 **Artifact uploads** — every security report is saved as a pipeline artifact
+- Application Flask containerisée — image de base minimale, utilisateur non-root
+- Pipeline CI/CD GitHub Actions — automatisé de `git push` à l'artefact prêt pour le déploiement
+- SAST — Bandit scanne le code Python pour les vulnérabilités courantes (SQLi, credentials codés en dur, crypto faible)
+- SCA — Safety vérifie les dépendances contre la base de données CVE
+- Scan de secrets — TruffleHog scanne les commits et l'historique Git
+- Scan de conteneur — Trivy identifie les CVE dans les couches d'image
+- Infrastructure as Code — Terraform provisionne les ressources cloud
+- Manifests Kubernetes — déploiement + service avec les meilleures pratiques de sécurité
+- Upload des artefacts — chaque rapport de sécurité est sauvegardé comme artefact du pipeline
 
 ---
 
-## 🧱 Stack
+## Stack
 
-| Layer | Tool |
-|-------|------|
+| Couche | Outil |
+|--------|-------|
 | Application | Python 3.11 · Flask |
-| Container | Docker |
+| Conteneur | Docker |
 | CI/CD | GitHub Actions |
 | SAST | Bandit |
 | SCA | Safety |
 | Secrets | TruffleHog |
-| Image scan | Trivy |
+| Scan d'image | Trivy |
 | IaC | Terraform (AWS) |
 | Orchestration | Kubernetes |
 
 ---
 
-## 📂 Project Structure
+## Structure du projet
 
 ```
 FirstWorkflow/
-├── app/                     # Python Flask application
+├── app/                     # Application Flask Python
 │   ├── main.py
 │   ├── requirements.txt
 │   └── Dockerfile
-├── k8s/                     # Kubernetes manifests
+├── k8s/                     # Manifests Kubernetes
 │   ├── deployment.yaml
 │   └── service.yaml
 ├── terraform/               # Infrastructure as Code
 │   ├── main.tf
 │   └── variables.tf
-├── security/                # Scanner configurations
+├── security/                # Configurations des scanners
 │   ├── bandit.yaml
 │   ├── safety-policy.json
 │   ├── secrets.toml
 │   └── trivy.yaml
 └── .github/workflows/
-    └── pipeline.yml         # CI/CD pipeline definition
+    └── pipeline.yml         # Définition du pipeline CI/CD
 ```
 
 ---
 
-## 🚀 Quick Start
+## Démarrage rapide
 
-### Run the app locally
+### Lancer l'app en local
 
 ```bash
 pip install -r app/requirements.txt
@@ -119,7 +118,7 @@ python app/main.py
 # → http://127.0.0.1:5000
 ```
 
-### Run security scans locally
+### Lancer les scans de sécurité en local
 
 ```bash
 pip install bandit safety
@@ -127,85 +126,85 @@ bandit -r app/ -c security/bandit.yaml
 safety check -r app/requirements.txt --policy-file security/safety-policy.json
 ```
 
-### Build & scan the Docker image
+### Builder et scanner l'image Docker
 
 ```bash
 docker build -t secure-flask:latest app/
 trivy image --config security/trivy.yaml secure-flask:latest
 ```
 
-### Trigger the pipeline
+### Déclencher le pipeline
 
 ```bash
 git push origin main
-# → GitHub Actions runs the full pipeline automatically
+# → GitHub Actions exécute le pipeline complet automatiquement
 ```
 
 ---
 
-## 🧩 CI/CD Pipeline
+## Pipeline CI/CD
 
-The pipeline (`.github/workflows/pipeline.yml`) executes these stages in order:
+Le pipeline (`.github/workflows/pipeline.yml`) exécute ces étapes dans l'ordre :
 
-1. **Checkout** source code
-2. **Setup** Python environment
-3. **Install** dependencies and security tools
-4. **TruffleHog** — scan commits and Git history for secrets
-5. **Bandit** — static analysis on the Python source
-6. **Safety** — dependency vulnerability scan
-7. **Build** the Docker image
-8. **Trivy** — scan the image for CVEs
-9. **Upload** all security reports as pipeline artifacts
-10. **Fail** the build if any HIGH / CRITICAL vulnerability is detected
+1. **Checkout** du code source
+2. **Setup** de l'environnement Python
+3. **Install** des dépendances et outils de sécurité
+4. **TruffleHog** — scan des commits et de l'historique Git pour les secrets
+5. **Bandit** — analyse statique du code Python
+6. **Safety** — scan des vulnérabilités de dépendances
+7. **Build** de l'image Docker
+8. **Trivy** — scan de l'image pour les CVE
+9. **Upload** de tous les rapports de sécurité comme artefacts du pipeline
+10. **Fail** la construction si une vulnérabilité HIGH / CRITICAL est détectée
 
-Every code change is automatically gated by these checks before anything reaches production.
-
----
-
-## 🔒 Security Implementation
-
-**Static Application Security Testing (SAST)** — `security/bandit.yaml` tunes Bandit for the Flask app: SQLi, hardcoded credentials, weak crypto, insecure deserialization.
-
-**Dependency Scanning (SCA)** — `security/safety-policy.json` defines exceptions for accepted/low-risk CVEs; everything else fails the build.
-
-**Secrets Management** — TruffleHog scans the full Git history; `security/secrets.toml` holds allowlist rules to avoid false positives on test fixtures.
-
-**Container Scanning** — Trivy is configured via `security/trivy.yaml` to fail on `HIGH` and `CRITICAL`; lower severities are logged but non-blocking.
-
-**Kubernetes Hardening** — pods run as non-root, read-only root filesystem, resource limits set, no privilege escalation.
+Chaque changement de code est automatiquement contrôlé par ces portes avant d'atteindre la production.
 
 ---
 
-## 🏗️ Infrastructure as Code
+## Implémentation de sécurité
 
-Terraform provisions the AWS resources (EC2, S3, IAM) with versioned, reproducible, auditable state — a clean foundation for deploying the Kubernetes cluster.
+**Static Application Security Testing (SAST)** — `security/bandit.yaml` ajuste Bandit pour l'app Flask : SQLi, credentials codés en dur, crypto faible, désérialisation non sécurisée.
+
+**Dependency Scanning (SCA)** — `security/safety-policy.json` définit les exceptions pour les CVE acceptées/low-risk ; tout le reste échoue la construction.
+
+**Secrets Management** — TruffleHog scanne l'historique Git complet ; `security/secrets.toml` contient les règles de whitelist pour éviter les faux positifs sur les fixtures de test.
+
+**Container Scanning** — Trivy est configuré via `security/trivy.yaml` pour échouer sur `HIGH` et `CRITICAL` ; les sévérités plus basses sont loggées mais non bloquantes.
+
+**Kubernetes Hardening** — les pods tournent en non-root, filesystem root en lecture seule, resource limits définis, pas d'escalade de privilege.
 
 ---
 
-## 🗺️ Roadmap
+## Infrastructure as Code
 
-- [ ] **DAST** stage with OWASP ZAP against a staging deployment
-- [ ] **SBOM** generation with Syft + signing with Cosign (supply-chain hardening)
-- [ ] **Policy-as-Code** gates with OPA / Conftest on Kubernetes manifests
-- [ ] **IaC scanning** with Checkov / tfsec on Terraform
-- [ ] **Dependabot** for automated dependency PRs
+Terraform provisionne les ressources AWS (EC2, S3, IAM) avec un état versionné, reproductible et auditable — une base propre pour déployer le cluster Kubernetes.
+
+---
+
+## Roadmap
+
+- [ ] Étape **DAST** avec OWASP ZAP contre un déploiement de staging
+- [ ] Génération **SBOM** avec Syft + signature avec Cosign (hardening de la chaîne d'approvisionnement)
+- [ ] Portes **Policy-as-Code** avec OPA / Conftest sur les manifests Kubernetes
+- [ ] Scan **IaC** avec Checkov / tfsec sur Terraform
+- [ ] **Dependabot** pour les PRs de dépendances automatisées
 - [ ] Progressive delivery (canary / blue-green) via Argo Rollouts
-- [ ] Observability: Prometheus + Grafana + Loki for metrics, logs, and alerts
+- [ ] Observabilité: Prometheus + Grafana + Loki pour les métriques, logs et alertes
 
 ---
 
-## 🎓 What I learned
+## Ce que j'ai appris
 
-- **Shift-left security** — catching vulnerabilities in CI is 100× cheaper than catching them in production
-- **Layered defense** — SAST, SCA, secrets, and image scanning each catch different classes of issues
-- **Pipeline design** — fast-failing stages first (lint/secrets) before expensive stages (container scans)
-- **Supply chain** — understanding that the image I ship is a sum of *every layer*, not just my code
-- **IaC discipline** — Terraform state management, variable segregation, and module structure
-- **Kubernetes security context** — the difference between a pod that *runs* and one that runs *safely*
+- **Shift-left security** — attraper les vulnérabilités en CI coûte 100× moins cher qu'en production
+- **Défense en couches** — SAST, SCA, secrets et scan d'image attrapent chacun des classes de problèmes différentes
+- **Design de pipeline** — stages qui échouent rapidement en premier (lint/secrets) avant les stages coûteux (container scans)
+- **Supply chain** — comprendre que l'image que je déploie est la somme de **chaque couche**, pas juste mon code
+- **Discipline IaC** — gestion d'état Terraform, séparation des variables, structure modulaire
+- **Sécurité Kubernetes** — la différence entre un pod qui **tourne** et un pod qui tourne **sécurisé**
 
 ---
 
-## 📜 Context
+## Contexte
 
-Personal learning project — built to internalize the full DevSecOps lifecycle end-to-end.
-Inspired by industry references: OWASP DevSecOps Maturity Model, Google SLSA, NIST SP 800-190.
+Projet d'apprentissage personnel — construit pour internaliser le cycle de vie DevSecOps complet de bout en bout.
+Inspiré par des références industrielles : OWASP DevSecOps Maturity Model, Google SLSA, NIST SP 800-190.
