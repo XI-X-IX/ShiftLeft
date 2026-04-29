@@ -1,6 +1,6 @@
 <div align="center">
 
-![SecureCI](./secureci-banner.png)
+![SecureCI](./securec.png)
 
 # Pipeline SecureCI — Application Cloud Sécurisée
 
