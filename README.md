@@ -2,7 +2,7 @@
 
 ![SecureCI](./secureci.png)
 
-# Pipeline SecureCI — Application Cloud Sécurisée
+# Pipeline ShiftLeft — Application Cloud Sécurisée
 
 ### *Pipeline DevSecOps de bout en bout : du code au conteneur, avec la sécurité intégrée à chaque étape.*
 
